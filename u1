@@ -1,0 +1,206 @@
+#!/bin/bash
+clear
+figlet descarga youtube | lolcat ;
+sleep 2
+clear
+while true ; do
+figlet -f script menu | lolcat ;
+echo -e "\e[92mElija Un numero\e[0m\e[33m
+
+1-\e[0mDescarga-musica\e[33m
+2-\e[0mDescarga-video\e[33m
+3-\e[0m \e[33m
+4-\e[0mMover descarga\e[33m
+5-\e[0mTrasformar\e[33m
+6-\e[0m \e[33m
+7-\e[0mReproductor cmus\e[33m
+99-\e[0mSalir\e[33m
+\e[0m" ;
+read numero
+
+###########################
+#     1 Descarga musica
+###########################
+
+if [ $numero == 1 ] ; then
+figlet -f script Audio | lolcat
+sleep 2
+echo -e "\e[92mEscriba la url del video\e[0m" ;
+read urla
+echo -e "\e[92mEscriba el formato
+m4a
+mp3
+wav
+aac
+ogg
+flac
+\e[0m"
+read formato
+echo -e "\e[33mEscribe nombre del archivo
+\e[0m" ;
+read nombre
+
+youtube-dl --extract-audio --audio-format $formato $urla -o $nombre.$formato ;
+figlet hecho | lolcat
+sleep 2
+clear
+
+fi
+#########################
+#   2 Descarga video 
+#########################
+
+if [ $numero == 2 ] ; then
+figlet Video | lolcat
+sleep 2
+clear
+
+echo -e "\e[92mEscriba la url del video\e[0m" ;
+read urlv
+echo -e "\e[33mEscribe formato de video
+mp4
+avi
+flv
+webv
+\e[0m" ;
+read forma
+youtube-dl --recode-video $forma $urlv ;
+figlet -f script Bajado | lolcat
+sleep 2
+clear
+fi
+
+#######################
+#    3
+#######################
+
+if [ $numero == 3 ] ; then
+
+sleep 2
+clear
+
+fi
+#######################
+#     4 Mover 
+#######################
+
+if [ $numero == 4 ] ; then
+figlet mover | lolcat ;
+cd /data/data/com.termux/files/home ;   
+ls |  grep -e ".mp3" -e ".m4a" -e ".wav" -e ".ogg" -e ".mp4" -e ".avi" -e ".mkv" -e ".flc" -e "flac" ;
+echo -e "\e[92mEscribe nombre del archivo
+Ha mover\e[0m" ;
+read archivo ;
+
+sudo mv  /data/data/com.termux/files/home/$archivo /data/data/com.termux/files/home/storage/music
+echo -e "\e[92mMovidos ha Music storage\e[0\
+m" ;
+sleep 2
+figlet hecho | lolcat
+sleep 2
+clear
+fi
+
+#####################
+#     5 TRASFORMAR
+#####################
+if [ $numero == 5 ] ; then
+    figlet -f script cambio | lolcat ;
+    sleep 2
+    clear
+    
+echo -e "\e[33mEscriba un numero
+1-Video
+2-Musica
+3-
+4-
+5-Salir
+\e[0m" ;
+read op ;
+clear
+#------------
+#  video
+if [ $op == 1 ] ; then
+
+ls | grep -e "mp4" -e "mkv" -e "avi" -e "webv" -e "flv" ;
+echo -e "\e[33mEscriba nombre del archivo
+\e[0m"
+read nombr
+echo -e "\e[33mEscriba el formato final
+\e[0m"
+read fo
+echo -e "\e[33mEscriba nombre nuevo
+sin extension
+\e[0m" ;
+read new
+nombrei=$nombr
+clear
+ffmpeg -i /data/data/com.termux/files/home/$nombrei $new.$fo ;
+figlet -f Hecho | lolcat ;
+sleep 2
+clear
+fi
+#--------------
+#  Musica
+if [ $op == 2 ] ; then
+
+echo -e "\e[33mEscriba nombre del archivo
+\e[0m"
+read nombri
+echo -e "\e[33mEscriba el formato final
+\e[0m"
+read foi
+echo -e "\e[33mEscriba nombre nuevo
+sin extension
+\e[0m" ;
+read newi
+clear
+ffmpeg -i /data/data/com.termux/files/home/$nombri $newi.$foi ;
+figlet -f Hecho | lolcat ;
+sleep 2
+clear
+fi
+#---------------
+#
+
+
+#------------
+#
+
+
+#-------------
+# Salir 5
+#-------------
+if [ $op == 5 ] ; then
+    figlet -f script Saliendo | lolcat
+    sleep 2
+    clear
+    exit
+fi
+fi
+##########@@@@@#####
+#     6
+####################
+
+
+
+####################
+#   7 Cmus-Play
+####################
+
+if [ $numero == 7 ] ; then
+cmus
+exit
+fi
+
+###############@#####
+#     99 SALIR
+#####################
+if [ $numero == 99 ] ; then
+figlet saliendo | lolcat
+sleep 2
+clear
+exit
+fi
+done
+exit
